@@ -1,0 +1,203 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Jason's REST API"
+  },
+  "host": "127.0.0.1:5000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/commands": {
+      "get": {
+        "tags": [
+          "GIT Commands"
+        ],
+        "summary": "Get all the commands",
+        "description": "Returns all the commands",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "All commands have been fetched"
+          },
+          "404": {
+            "description": "No commands found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "GIT Commands"
+        ],
+        "summary": "Add a new command",
+        "description": "",
+        "operationId": "addCommand",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Command"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A new command has been created"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/commands/{id}": {
+      "get": {
+        "tags": [
+          "GIT Commands"
+        ],
+        "summary": "Get a command by id",
+        "description": "Returns a specified command",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of command to fetch",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The command has been fetched"
+          },
+          "404": {
+            "description": "No command found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "GIT Commands"
+        ],
+        "summary": "Update an existing command by ID",
+        "description": "",
+        "operationId": "updateCommand",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of command to change",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updates to the command",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Command"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The command has been updated"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Command not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "GIT Commands"
+        ],
+        "summary": "Deletes the specified command",
+        "description": "",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Command id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Command not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Command": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "git checkout -b __"
+        },
+        "description": {
+          "type": "string",
+          "example": "This command creates a new branch and switches to it."
+        }
+      }
+    }
+  }
+}
